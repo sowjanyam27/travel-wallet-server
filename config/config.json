@@ -1,6 +1,6 @@
 {
   "development": {
-    "url": "postgres://rlphnlsg:SOc5QtRAVGkA2ac_qbgJbhIUdEVuzBPA@balarama.db.elephantsql.com:5432/rlphnlsg",
+    "url": "postgres://rbmjajhl:hvOl26NabQFhaCcVdC0d9sv8JRnABKTK@kandula.db.elephantsql.com:5432/rbmjajhl",
     "dialect": "postgres",
     "operatorsAliases": "0"
   },
