@@ -7,6 +7,9 @@ const { PORT } = require("./config/constants");
 const authRouter = require("./routers/auth");
 const authMiddleWare = require("./auth/middleware");
 const tripRouter = require("./routers/trip");
+const userRouter = require("./routers/user");
+const userTripsRouter = require("./routers/usertrips");
+const expenseRouter = require("./routers/expense");
 
 const app = express();
 app.use(loggerMiddleWare("dev"));
@@ -23,5 +26,9 @@ if (process.env.DELAY) {
 }
 
 app.use("/", authRouter);
-app.use("/home", tripRouter);
+app.use("/user", userRouter);
+app.use("/home", userTripsRouter);
+app.use("/trip", tripRouter);
+app.use("/expense", expenseRouter);
+
 app.listen(PORT, () => console.log("server started on ", PORT));
