@@ -11,12 +11,12 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          title: "travel",
+          title: "transport",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          title: "accomidation",
+          title: "accommodation",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
