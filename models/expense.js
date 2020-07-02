@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       expense.belongsTo(models.trip);
-      expense.hasMany(models.expensetype);
+      expense.belongsTo(models.expensetype);
     }
   }
   expense.init(
