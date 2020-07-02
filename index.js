@@ -10,6 +10,8 @@ const tripRouter = require("./routers/trip");
 const userRouter = require("./routers/user");
 const userTripsRouter = require("./routers/usertrips");
 const expenseRouter = require("./routers/expense");
+const expenseTypeRouter = require("./routers/expensetype");
+const userexpenseRouter = require("./routers/userexpense");
 
 const app = express();
 app.use(loggerMiddleWare("dev"));
@@ -29,6 +31,8 @@ app.use("/", authRouter);
 app.use("/user", userRouter);
 app.use("/home", userTripsRouter);
 app.use("/trip", tripRouter);
+app.use("/types", expenseTypeRouter);
 app.use("/expense", expenseRouter);
+app.use("/userexpense", userexpenseRouter);
 
 app.listen(PORT, () => console.log("server started on ", PORT));
