@@ -9,6 +9,7 @@ const UserTrips = require("../models").usertrip;
 const User = require("../models").user;
 const UserExpenses = require("../models").userexpense;
 const sequelize = require("sequelize");
+const currency = require("currency.js");
 
 router.post("/:tripId", authMiddleware, async (request, response, next) => {
   try {
@@ -46,7 +47,7 @@ router.post("/:tripId", authMiddleware, async (request, response, next) => {
         await UserExpenses.create({
           expenseId: newExpense.id,
           userId: friend,
-          amount: amt,
+          amount: currency(amt),
         });
       });
 
