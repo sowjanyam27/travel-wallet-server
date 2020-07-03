@@ -21,6 +21,20 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          fullname: "test3",
+          email: "test3@t.com",
+          password: bcrypt.hashSync("test3", SALT_ROUNDS),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          fullname: "test4",
+          email: "test4@t.com",
+          password: bcrypt.hashSync("test4", SALT_ROUNDS),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {}
     );

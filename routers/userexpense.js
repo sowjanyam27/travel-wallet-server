@@ -20,7 +20,7 @@ router.get("/:tripId", async (request, response, next) => {
       include: [
         {
           model: User,
-          attributes: ["fullname"],
+          attributes: ["fullname", "email"],
         },
         {
           model: Expenses,
