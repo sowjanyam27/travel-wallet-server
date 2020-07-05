@@ -87,4 +87,29 @@ router.get("/:tripId", async (request, response, next) => {
   }
 });
 
+router.delete("/:id", async (req, res, next) => {
+  try {
+    const id = parseInt(req.params.id);
+    const toDelete = await Expenses.findByPk(id);
+    if (!toDelete) {
+      res.status(404).send("Expense not found");
+    } else {
+      const deleted = await toDelete.destroy();
+      const toDeleteFromUserExpense = await UserExpenses.findAll({
+        where: { expenseId: id },
+      });
+      if (!toDeleteFromUserExpense) {
+        res.status(404).send("Expense not found in UserExpense");
+      } else {
+        const deletedUserExpenses = toDeleteFromUserExpense.forEach(
+          async (user) => await user.destroy()
+        );
+      }
+      res.json(deleted);
+    }
+  } catch (e) {
+    next(e);
+  }
+});
+
 module.exports = router;
