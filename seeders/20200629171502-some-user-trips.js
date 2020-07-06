@@ -17,6 +17,18 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          userId: 1,
+          tripId: 3,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          userId: 1,
+          tripId: 4,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {}
     );

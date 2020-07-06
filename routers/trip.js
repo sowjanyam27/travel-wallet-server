@@ -7,21 +7,64 @@ const Expenses = require("../models").expense;
 const ExpenseType = require("../models").expensetype;
 const UserTrips = require("../models").usertrip;
 const User = require("../models").user;
+const multer = require("multer");
+const path = require("path");
 
-router.post("/", authMiddleware, async (request, response, next) => {
-  try {
-    //const { userId } = request.params;
-    const { title, budget, image } = request.body;
-    if (!title) {
-      response.status(400).send("Must provide title for Trip");
-    } else {
-      const newTrip = await Trips.create({ title, budget, image });
-      response.json(newTrip);
-    }
-  } catch (e) {
-    next(e);
-  }
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public");
+  },
+  filename: function (req, file, cb) {
+    cb(null, new Date().toISOString().replace(/:/g, "-") + file.originalname);
+  },
 });
+
+const fileFilter = (req, file, cb) => {
+  // reject a file
+  if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+const upload = multer({
+  storage: storage,
+  fileFilter: fileFilter,
+});
+
+router.post(
+  "/",
+  authMiddleware,
+  upload.single("file"),
+  async (request, response, next) => {
+    try {
+      const {
+        file,
+        body: { title, amount },
+      } = request;
+
+      let image = null;
+      if (file) {
+        image = request.file.path;
+      }
+      // console.log("File:", request.file, request.body);
+
+      if (!title) {
+        response.status(400).send("Must provide title for Trip");
+      } else {
+        const newTrip = await Trips.create({
+          title,
+          budget: amount,
+          image: image,
+        });
+        response.json(newTrip);
+      }
+    } catch (e) {
+      next(e);
+    }
+  }
+);
 
 // All the users for the given tripId
 router.get("/:tripId", async (request, response, next) => {

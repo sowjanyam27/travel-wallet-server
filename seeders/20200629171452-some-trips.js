@@ -6,18 +6,30 @@ module.exports = {
       "trips",
       [
         {
-          title: "Paris",
-          budget: 1000,
-          image:
-            "https://www.iata.org/contentassets/4b8ec35d55dd4596a1ee21a75aaab835/paris-330x200.jpg?w=330&h=200&mode=crop&scale=both&v=20190829085556",
+          title: "Thailand",
+          budget: 3000,
+          image: "public/2020-07-06T15-54-11.770Zthailand.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          title: "Dubai",
+          title: "Singapore",
           budget: 2000,
-          image:
-            "https://media.tacdn.com/media/attractions-splice-spp-674x446/09/50/95/e5.jpg",
+          image: "public/2020-07-06T15-54-58.799Zsingapore.jpg",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          title: "Bali",
+          budget: 2000,
+          image: "public/2020-07-06T15-55-15.958Zbali.jpg",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          title: "Cape Town",
+          budget: 2000,
+          image: "public/2020-07-06T15-55-42.907Zcapetown.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
         },

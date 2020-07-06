@@ -13,13 +13,14 @@ const expenseRouter = require("./routers/expense");
 const expenseTypeRouter = require("./routers/expensetype");
 const userexpenseRouter = require("./routers/userexpense");
 const emailRouter = require("./routers/email");
-
+const path = require("path");
 const app = express();
 app.use(loggerMiddleWare("dev"));
 
 const jsonParser = express.json();
-
 app.use(corsMiddleWare());
+//app.use("/uploads", express.static("uploads"));
+app.use("/static", express.static(path.join(__dirname, "public")));
 app.use(jsonParser);
 
 if (process.env.DELAY) {
