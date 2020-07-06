@@ -28,4 +28,11 @@ const getDetails = async (tripId) => {
   console.log("output:", output);
 };
 
-getDetails(3);
+//getDetails(3);
+
+const getDelete = async (id) => {
+  const toDelete = await Expenses.findByPk(id, { include: [UserExpenses] });
+  console.log("toDelete:", toDelete);
+};
+
+getDelete(4);

@@ -19,7 +19,7 @@ router.post("/send", authMiddleware, async (request, response, next) => {
       port: 25,
       secure: false, // true for 465, false for other ports
       auth: {
-        // in order for this to work, the user MUST allow "Less secure app" AND disable two-step verification on Google Account
+        //  the user MUST allow "Less secure app" AND disable two-step verification on Google Account
         user: process.env.EMAIL, // gmail
         pass: process.env.PASSWORD, // password
       },
