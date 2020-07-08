@@ -3,6 +3,7 @@ const { toJWT } = require("../auth/jwt");
 const router = new Router();
 const User = require("../models").user;
 
+// To verify if the user exists or not using emailId
 router.get("/:email", async (request, response, next) => {
   try {
     const { email } = request.params;

@@ -1,15 +1,13 @@
 const { Router } = require("express");
-const { toJWT } = require("../auth/jwt");
 const authMiddleware = require("../auth/middleware");
 const router = new Router();
 const Trips = require("../models").trip;
 const Expenses = require("../models").expense;
-const ExpenseType = require("../models").expensetype;
 const UserTrips = require("../models").usertrip;
 const User = require("../models").user;
 const multer = require("multer");
-const path = require("path");
 
+// destination folder public for all the uploaded images
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public");
@@ -19,6 +17,7 @@ const storage = multer.diskStorage({
   },
 });
 
+//Filter for only accepting the files which are jpeg and png format
 const fileFilter = (req, file, cb) => {
   // reject a file
   if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
@@ -45,6 +44,8 @@ router.post(
       } = request;
 
       let image = null;
+
+      //Added this condition because image is not a mandatory field
       if (file) {
         image = request.file.path;
       }
@@ -77,7 +78,7 @@ router.get("/:tripId", async (request, response, next) => {
     }
     const expenses = await UserTrips.findAll({
       where: { tripId },
-      include: [User],
+      include: [User, Trips],
     });
     if (!expenses) {
       response.status(404).send("expenses not found");
@@ -89,6 +90,7 @@ router.get("/:tripId", async (request, response, next) => {
   }
 });
 
+//get all the expenses for the trip
 router.get("/expenses/:tripId", async (request, response, next) => {
   try {
     const { tripId } = request.params;

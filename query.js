@@ -4,8 +4,30 @@ const UserTrips = require("./models").usertrip;
 const User = require("./models").user;
 const UserExpenses = require("./models").userexpense;
 const sequelize = require("sequelize");
+const Trips = require("./models").trip;
+const Op = sequelize.Op;
 
-const getDetails = async (tripId) => {
+const getTrips = async (userId) => {
+  const trips = await UserTrips.findAll({
+    attributes: [
+      "tripId",
+      [sequelize.fn("COUNT", sequelize.col("tripId")), "n_tripId"],
+    ],
+    where: { userId },
+    include: {
+      model: Trips,
+      attributes: ["title", "image"],
+    },
+    group: ["usertrip.tripId", "trip.id"],
+  });
+  console.log(
+    "rows",
+    trips.map((row) => row.get({ plain: true }))
+  );
+};
+getTrips(1);
+
+/* const getDetails = async (tripId) => {
   const output = await UserExpenses.findAll({
     attributes: [
       "user.id",
@@ -29,10 +51,21 @@ const getDetails = async (tripId) => {
 };
 
 //getDetails(3);
+ */
 
-const getDelete = async (id) => {
-  const toDelete = await Expenses.findByPk(id, { include: [UserExpenses] });
-  console.log("toDelete:", toDelete);
+const getCount = async (ids) => {
+  const result = await UserTrips.findAll({
+    attributes: [
+      "tripId",
+      [sequelize.fn("COUNT", sequelize.col("tripId")), "n_tripId"],
+    ],
+    where: { tripId: { [Op.in]: ids } },
+    group: "tripId",
+  });
+  console.log(
+    "rows",
+    result.map((row) => row.get({ plain: true }))
+  );
 };
 
-getDelete(4);
+getCount([1, 2, 3, 4, 5]);

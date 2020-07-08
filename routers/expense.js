@@ -11,6 +11,7 @@ const UserExpenses = require("../models").userexpense;
 const sequelize = require("sequelize");
 const currency = require("currency.js");
 
+//posting the new expense with tripId as param
 router.post("/:tripId", authMiddleware, async (request, response, next) => {
   try {
     const { tripId } = request.params;
@@ -28,6 +29,8 @@ router.post("/:tripId", authMiddleware, async (request, response, next) => {
         tripId,
       });
 
+      // when the user paid but not part of the shared group
+      // creating a row of + full amount in user expense table
       if (!sharedBy.includes(spentBy)) {
         const newEntry = await UserExpenses.create({
           expenseId: newExpense.id,
@@ -36,12 +39,15 @@ router.post("/:tripId", authMiddleware, async (request, response, next) => {
         });
       }
 
+      //Inserting rows into userexpenses for all the persons who shared the expense
       const userExpensesCreatePromises = sharedBy.map(async (friend) => {
         //console.log(friend);
         let amt = 0;
+        // for the user who paid the expense, populate with +(amount) which he gets in return
         if (friend === spentBy) {
           amt = (amount / numberOfFriends) * (numberOfFriends - 1);
         } else {
+          //for the users who shared populate with -(amount) which the user has to pay
           amt = -(amount / numberOfFriends);
         }
         await UserExpenses.create({
@@ -64,10 +70,15 @@ router.post("/:tripId", authMiddleware, async (request, response, next) => {
   }
 });
 
+// Get all the expenses for each category to show the statistics
+// select expensetypeId , sum(amount)
+//  from expenses
+//  where tripId = tripId
+//  groupBy expensetypeId
+//  orderBy expensetypeId
 router.get("/:tripId", async (request, response, next) => {
   try {
     const { tripId } = request.params;
-    console.log("------tripId:", tripId);
     const expensesTotal = await Expenses.findAll({
       attributes: [
         "expensetypeId",
@@ -87,6 +98,7 @@ router.get("/:tripId", async (request, response, next) => {
   }
 });
 
+//delete an expense with expenseId
 router.delete("/:id", async (req, res, next) => {
   try {
     const id = parseInt(req.params.id);

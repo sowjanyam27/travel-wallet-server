@@ -8,14 +8,14 @@ module.exports = {
         {
           userId: 1,
           expenseId: 1,
-          amount: 10,
+          amount: 20,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           userId: 1,
           expenseId: 2,
-          amount: -10,
+          amount: 10,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
