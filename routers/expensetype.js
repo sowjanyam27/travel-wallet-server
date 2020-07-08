@@ -1,14 +1,8 @@
 const { Router } = require("express");
-const { toJWT } = require("../auth/jwt");
-const authMiddleware = require("../auth/middleware");
 const router = new Router();
-const Trips = require("../models").trip;
-const Expenses = require("../models").expense;
 const ExpenseType = require("../models").expensetype;
-const UserTrips = require("../models").usertrip;
-const User = require("../models").user;
-const UserExpenses = require("../models").userexpense;
 
+//Get all the expenseTypes
 router.get("/", async (request, response, next) => {
   try {
     const expenseTypes = await ExpenseType.findAll();

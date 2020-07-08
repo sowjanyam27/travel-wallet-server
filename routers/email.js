@@ -10,10 +10,6 @@ router.post("/send", authMiddleware, async (request, response, next) => {
   const { name, message, toemaiIds } = request.body;
 
   try {
-    // Generate test SMTP service account from ethereal.email
-    // Only needed if you don't have a real mail account for testing
-    let testAccount = await nodemailer.createTestAccount();
-
     let transporter = nodemailer.createTransport({
       service: "gmail",
       port: 25,
@@ -26,7 +22,7 @@ router.post("/send", authMiddleware, async (request, response, next) => {
     });
 
     let mail = {
-      from: "travelgeeks2020@gmail.com", // user gmail
+      from: process.env.EMAIL, // user gmail
       to: `${toemaiIds}`, // destination
       subject: "Summary of the Group trip",
       text: `${message}`,
