@@ -22,6 +22,7 @@ module.exports = {
     });
     await queryInterface.addColumn("trips", "image", {
       type: Sequelize.STRING,
+      allowNull: false,
     });
   },
 
