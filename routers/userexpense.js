@@ -8,7 +8,6 @@ const UserExpenses = require("../models").userexpense;
 const sequelize = require("sequelize");
 
 //endpoint to get all the users totals for the trip to calculate the summary
-//select user.id , user.fullname ,user.email
 
 router.get("/:tripId", async (request, response, next) => {
   try {

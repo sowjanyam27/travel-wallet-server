@@ -1,9 +1,6 @@
 const { Router } = require("express");
-const authMiddleware = require("../auth/middleware");
 const router = new Router();
-const Trips = require("../models").trip;
 const UserTrips = require("../models").usertrip;
-const User = require("../models").user;
 const sequelize = require("sequelize");
 const Op = sequelize.Op;
 
@@ -14,8 +11,9 @@ router.get("/trip", async (request, response, next) => {
     if (!ids) {
       return response
         .status(400)
-        .send({ message: "ids is not passed in the body" });
+        .send({ message: "ids is not passed in the query" });
     }
+    //select tripId , count(*) from usertrips where tripId in (ids) groupby tripId;
     const result = await UserTrips.findAll({
       attributes: [
         "tripId",
