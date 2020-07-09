@@ -25,6 +25,11 @@ app.use(corsMiddleWare());
 app.use("/static", express.static(path.join(__dirname, "public")));
 app.use(jsonParser);
 
+// GET endpoint for testing purposes, can be removed
+app.get("/", async (req, res) => {
+  res.send("Hi from express");
+});
+
 if (process.env.DELAY) {
   app.use((req, res, next) => {
     setTimeout(() => next(), parseInt(process.env.DELAY));
