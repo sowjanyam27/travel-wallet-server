@@ -13,14 +13,6 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
-        {
-          title: "coffee",
-          amount: 10,
-          expensetypeId: 1,
-          tripId: 1,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
       ],
       {}
     );
