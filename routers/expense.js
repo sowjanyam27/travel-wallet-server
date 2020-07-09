@@ -40,10 +40,10 @@ router.post("/:tripId", authMiddleware, async (request, response, next) => {
         let amt = 0;
         // for the user who paid the expense, populate with +(amount) which he gets in return
         if (friend === spentBy) {
-          amt = (amount / numberOfFriends) * (numberOfFriends - 1);
+          amt = currency((amount / numberOfFriends) * (numberOfFriends - 1));
         } else {
           //for the users who shared populate with -(amount) which the user has to pay
-          amt = -(amount / numberOfFriends);
+          amt = -currency(amount / numberOfFriends);
         }
         await UserExpenses.create({
           expenseId: newExpense.id,
