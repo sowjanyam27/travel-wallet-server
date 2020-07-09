@@ -22,6 +22,7 @@ router.post("/:tripId", authMiddleware, async (request, response, next) => {
     if (!tripId || !title || !amount) {
       response.status(400).send("Must provide title and amount for expense");
     } else {
+      //First create an entry in expense table
       const newExpense = await Expenses.create({
         title,
         amount,
