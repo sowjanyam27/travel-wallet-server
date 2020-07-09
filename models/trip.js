@@ -8,11 +8,11 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      trip.belongsToMany(user, {
+      trip.belongsToMany(models.user, {
         through: "usertrips",
         forienkey: "tripId",
       });
-      trip.hasMany(models.expenses);
+      trip.hasMany(models.expense);
     }
   }
   trip.init(
@@ -23,6 +23,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       budget: {
         type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      image: {
+        type: DataTypes.STRING,
         allowNull: false,
       },
     },

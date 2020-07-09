@@ -8,8 +8,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      expenses.belongsTo(models.trip);
-      expenses.hasMany(expensetypes);
+      expense.belongsTo(models.trip);
+      expense.belongsTo(models.expensetype);
     }
   }
   expense.init(
@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       amount: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
     },

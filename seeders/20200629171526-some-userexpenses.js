@@ -13,8 +13,8 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          userId: 1,
-          expenseId: 2,
+          userId: 2,
+          expenseId: 1,
           amount: -10,
           createdAt: new Date(),
           updatedAt: new Date(),

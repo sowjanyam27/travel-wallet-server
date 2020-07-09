@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      expenseType.belongsto(models.trip);
+      // expensetype.belongsTo(models.trip);
     }
   }
   expensetype.init(
