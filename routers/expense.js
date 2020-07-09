@@ -1,12 +1,7 @@
 const { Router } = require("express");
-const { toJWT } = require("../auth/jwt");
 const authMiddleware = require("../auth/middleware");
 const router = new Router();
-const Trips = require("../models").trip;
 const Expenses = require("../models").expense;
-const ExpenseType = require("../models").expensetype;
-const UserTrips = require("../models").usertrip;
-const User = require("../models").user;
 const UserExpenses = require("../models").userexpense;
 const sequelize = require("sequelize");
 const currency = require("currency.js");
@@ -16,7 +11,7 @@ router.post("/:tripId", authMiddleware, async (request, response, next) => {
   try {
     const { tripId } = request.params;
     const { title, amount, expensetypeId, sharedBy, spentBy } = request.body;
-    console.log("expensetypeId:", expensetypeId, typeof expensetypeId);
+    //console.log("expensetypeId:", expensetypeId, typeof expensetypeId);
 
     const numberOfFriends = sharedBy.length || 1;
     if (!tripId || !title || !amount) {
@@ -42,7 +37,6 @@ router.post("/:tripId", authMiddleware, async (request, response, next) => {
 
       //Inserting rows into userexpenses for all the persons who shared the expense
       const userExpensesCreatePromises = sharedBy.map(async (friend) => {
-        //console.log(friend);
         let amt = 0;
         // for the user who paid the expense, populate with +(amount) which he gets in return
         if (friend === spentBy) {

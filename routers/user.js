@@ -15,7 +15,7 @@ router.get("/:email", async (request, response, next) => {
     const user = await User.findOne({
       where: { email },
     });
-    //removing this condition because to display that user is not found in front end
+    //removing this condition because to display that "user is not found" in front end
     //not with status code in the backend
     /*  if (!user) {
       response.status(404).send("user not found");
