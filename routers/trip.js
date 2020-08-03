@@ -35,20 +35,17 @@ const upload = multer({
 router.post(
   "/",
   authMiddleware,
-  upload.single("file"),
+  //upload.single("file"),
   async (request, response, next) => {
     try {
-      const {
-        file,
-        body: { title, amount },
-      } = request;
+      const { title, amount, image } = request.body;
 
-      let image = null;
+      /*      let image = null;
 
       //Added this condition because image is not a mandatory field
       if (file) {
         image = request.file.path;
-      }
+      } */
       // console.log("File:", request.file, request.body);
 
       if (!title) {
@@ -57,7 +54,7 @@ router.post(
         const newTrip = await Trips.create({
           title,
           budget: amount,
-          image: image,
+          image,
         });
         response.json(newTrip);
       }
