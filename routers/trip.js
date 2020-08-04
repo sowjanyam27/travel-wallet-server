@@ -38,7 +38,7 @@ router.post(
   //upload.single("file"),
   async (request, response, next) => {
     try {
-      const { title, amount, image } = request;
+      const { title, amount, image } = request.body;
 
       // console.log("File:", request.file, request.body);
 
