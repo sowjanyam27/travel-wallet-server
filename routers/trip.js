@@ -35,20 +35,11 @@ const upload = multer({
 router.post(
   "/",
   authMiddleware,
-  upload.single("file"),
+  //upload.single("file"),
   async (request, response, next) => {
     try {
-      const {
-        file,
-        body: { title, amount },
-      } = request;
+      const { title, amount, image } = request;
 
-      let image = null;
-
-      //Added this condition because image is not a mandatory field
-      if (file) {
-        image = request.file.path;
-      }
       // console.log("File:", request.file, request.body);
 
       if (!title) {
@@ -57,7 +48,7 @@ router.post(
         const newTrip = await Trips.create({
           title,
           budget: amount,
-          image: image,
+          image,
         });
         response.json(newTrip);
       }
@@ -106,6 +97,40 @@ router.get("/expenses/:tripId", async (request, response, next) => {
       response.status(404).send("expenses not found");
     } else {
       response.send(expenses);
+    }
+  } catch (e) {
+    next(e);
+  }
+});
+
+//delete an expense with expenseId
+router.delete("/:id", async (req, res, next) => {
+  try {
+    const id = parseInt(req.params.id);
+    const toDelete = await Trips.findByPk(id);
+    if (!toDelete) {
+      res.status(404).send("Trip not found");
+    } else {
+      const deleted = await toDelete.destroy();
+      const toDeleteFromExpenses = await Expenses.findAll({
+        where: { tripId: id },
+      });
+
+      const deletedExpenses = toDeleteFromExpenses.forEach(
+        async (user) => await user.destroy()
+      );
+
+      const toDeleteFromUserTrip = await UserTrips.findAll({
+        where: { tripId: id },
+      });
+      if (!toDeleteFromUserTrip) {
+        res.status(404).send("Trip not found in UserTrip");
+      } else {
+        const deletedUserTrips = toDeleteFromUserTrip.forEach(
+          async (user) => await user.destroy()
+        );
+      }
+      res.json(deleted);
     }
   } catch (e) {
     next(e);
