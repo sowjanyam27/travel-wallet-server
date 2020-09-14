@@ -13,6 +13,7 @@ router.get("/:email", async (request, response, next) => {
         .send({ message: "email is not passed in the body" });
     }
     const user = await User.findOne({
+      attributes: ["id", "fullname", "email"],
       where: { email },
     });
     //removing this condition because to display that "user is not found" in front end
