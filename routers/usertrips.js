@@ -15,7 +15,11 @@ router.get("/:userId", authMiddleware, async (request, response, next) => {
     }
     const trips = await UserTrips.findAll({
       where: { userId },
-      include: [Trips],
+      attributes: ["id", "tripId", "userId"],
+      include: {
+        model: Trips,
+        attributes: ["budget", "image", "title"],
+      },
     });
     if (!trips) {
       response.status(404).send("artworks not found");

@@ -5,7 +5,9 @@ const ExpenseType = require("../models").expensetype;
 //Get all the expenseTypes
 router.get("/", async (request, response, next) => {
   try {
-    const expenseTypes = await ExpenseType.findAll();
+    const expenseTypes = await ExpenseType.findAll({
+      attributes: ["id", "title"],
+    });
     if (!expenseTypes) {
       response.status(404).send("expenseTypes not found");
     } else {
